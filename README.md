@@ -145,8 +145,5 @@ Email: katlegomagoro98@gmail.com
 LinkedIn: https://www.linkedin.com/in/katlego-magoro-288b08236/
 Feel free to reach out with any inquiries.
 
-
-
-
 ---
 

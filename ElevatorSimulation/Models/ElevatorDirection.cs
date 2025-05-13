@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ElevatorSimulation.Models
 {
-    internal class ElevatorDirection
+    public enum ElevatorDirection
     {
+        Idle,
+        Up,
+        Down
     }
 }
