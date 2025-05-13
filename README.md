@@ -138,5 +138,15 @@ Everything is versioned intentionally to show software engineering practice.
 
 Made by [@katlegomagoro](https://github.com/katlegomagoro) 
 
+## Contact Information
+For any questions or support, please contact:
+Name: Katlego Magoro
+Email: katlegomagoro98@gmail.com
+LinkedIn: https://www.linkedin.com/in/katlego-magoro-288b08236/
+Feel free to reach out with any inquiries.
+
+
+
+
 ---
 
