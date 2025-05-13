@@ -31,7 +31,7 @@ The project is built with modern .NET tools and follows a layered architecture:
 
 ## Project Structure
 
-The project is organized into logical layers to keep things maintainable and testable:
+The project is organised into logical layers to keep things maintainable and testable:
 
 - `Models`  
   Defines the elevator entity and any other supporting data structures.
@@ -52,7 +52,7 @@ The project is organized into logical layers to keep things maintainable and tes
 
 ## Pseudocode Reference
 
-This project is based on structured, expert-level pseudocode. Below is a simplified view of the logic that drives the application.
+This project is based on structured, . Below is a simplified view of the logic that drives the application this is what i do for planning to build good logic for the Code.
 
 ### Step 1: Initialization
 ```plaintext
