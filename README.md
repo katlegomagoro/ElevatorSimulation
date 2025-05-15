@@ -19,13 +19,13 @@ This application simulates the behavior of elevators in a multi-story building. 
 
 The project is built with modern .NET tools and follows a layered architecture:
 
-- .NET 7 - application framework
-- C# 10 - language features
+- .NET 9 - application framework
+- C# 13 - language features
 - Visual Studio 2022 - development environment
 - Git & GitHub - version control
 - Clean Architecture - separation of concerns
-- xUnit (planned) - unit testing support
-- GitHub Actions (planned) - CI/CD for builds and tests
+- xUnit - unit testing support
+- GitHub Actions - CI/CD for builds and tests
 
 ---
 
@@ -47,6 +47,8 @@ The project is organised into logical layers to keep things maintainable and tes
 
 - `Program.cs`  
   The entry point. It wires everything together and runs the main loop.
+- `ElevatorSimulation.Tests`  
+  Contains the unit test suite for validating elevator logic, movement, dispatching, and input handling using xUnit.
 
 ---
 
