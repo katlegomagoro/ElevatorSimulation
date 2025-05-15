@@ -12,13 +12,13 @@ namespace ElevatorSimulation.Tests.Services
         [InlineData(4, 4, ElevatorDirection.Idle)]
         public void GetDirectionToFloor_ReturnsCorrectDirection(int from, int to, ElevatorDirection expected)
         {
-            // Arrange
+
             var elevator = new Elevator { Id = 1, CurrentFloor = from };
 
-            // Act
+  
             var actual = ElevatorController.GetDirectionToFloor(elevator, to);
 
-            // Assert
+
             Assert.Equal(expected, actual);
         }
 
