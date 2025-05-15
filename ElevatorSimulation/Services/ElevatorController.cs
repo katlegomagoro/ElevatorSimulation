@@ -1,14 +1,23 @@
 ﻿using ElevatorSimulation.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ElevatorSimulation.Services
 {
     public static class ElevatorController
     {
+        // Pure helper for direction
+        public static ElevatorDirection GetDirectionToFloor(Elevator elevator, int targetFloor)
+        {
+            if (targetFloor > elevator.CurrentFloor)
+                return ElevatorDirection.Up;
+            else if (targetFloor < elevator.CurrentFloor)
+                return ElevatorDirection.Down;
+            else
+                return ElevatorDirection.Idle;
+        }
+
+        // Actual movement 
         public static void MoveToFloor(Elevator elevator, int targetFloor)
         {
             if (elevator.CurrentFloor == targetFloor)
@@ -17,22 +26,16 @@ namespace ElevatorSimulation.Services
                 return;
             }
 
-            // Set direction based on target
-            elevator.Direction = targetFloor > elevator.CurrentFloor
-                ? ElevatorDirection.Up
-                : ElevatorDirection.Down;
-
+            elevator.Direction = GetDirectionToFloor(elevator, targetFloor);
             Console.WriteLine($"Elevator {elevator.Id} moving {elevator.Direction}...");
 
-            // Simulate step- by step movement
             while (elevator.CurrentFloor != targetFloor)
             {
                 elevator.CurrentFloor += elevator.Direction == ElevatorDirection.Up ? 1 : -1;
                 Console.WriteLine($"Elevator {elevator.Id} now at Floor {elevator.CurrentFloor}");
-                Thread.Sleep(300); // simulate delay between floors
+                Thread.Sleep(300);
             }
 
-            // Arrived
             elevator.Direction = ElevatorDirection.Idle;
             Console.WriteLine($"Elevator {elevator.Id} has arrived at Floor {targetFloor}");
         }
