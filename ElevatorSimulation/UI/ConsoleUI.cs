@@ -24,41 +24,62 @@ namespace ElevatorSimulation.UI
 
         public void HandleElevatorRequest(List<Elevator> elevators, DispatcherService dispatcher, int totalFloors)
         {
-            // Prompt for floor input
-            int currentFloor;
-            do
+            try
             {
-                currentFloor = InputValidator.PromptInt($"Enter your current floor (1 - {totalFloors}):");
-            } while (!InputValidator.IsValidFloor(currentFloor, totalFloors));
+                if (elevators == null || !elevators.Any())
+                {
+                    Console.WriteLine("Error: No elevators are configured in the system.");
+                    return;
+                }
 
-            // Prompt for number of passengers
-            int passengerCount;
-            do
-            {
-                passengerCount = InputValidator.PromptInt("Enter number of passengers:");
-            } while (!InputValidator.IsValidPassengerCount(passengerCount));
+                if (dispatcher == null)
+                {
+                    Console.WriteLine("Error: Dispatcher service is unavailable.");
+                    return;
+                }
 
-            // Assign best elevator
-            var bestElevator = dispatcher.AssignBestElevator(currentFloor);
-            if (bestElevator == null)
-            {
-                Console.WriteLine("No available elevators. Please wait...");
-                return;
+                // Prompt for current floor
+                int currentFloor;
+                do
+                {
+                    currentFloor = InputValidator.PromptInt($"Enter your current floor (1 - {totalFloors}):");
+                } while (!InputValidator.IsValidFloor(currentFloor, totalFloors));
+
+                // Prompt for passenger count
+                int passengerCount;
+                do
+                {
+                    passengerCount = InputValidator.PromptInt("Enter number of passengers:");
+                } while (!InputValidator.IsValidPassengerCount(passengerCount));
+
+                // Assign best elevator
+                var bestElevator = dispatcher.AssignBestElevator(currentFloor);
+                if (bestElevator == null)
+                {
+                    Console.WriteLine("No available elevators at the moment. Please wait and try again.");
+                    return;
+                }
+
+                Console.WriteLine($"Elevator {bestElevator.Id} is arriving at Floor {currentFloor}...");
+                ElevatorController.MoveToFloor(bestElevator, currentFloor);
+                PassengerRequestHandler.BoardPassengers(bestElevator, passengerCount);
+
+                // Prompt for destination
+                int destinationFloor;
+                do
+                {
+                    destinationFloor = InputValidator.PromptInt($"Enter destination floor (1 - {totalFloors}):");
+                } while (!InputValidator.IsValidFloor(destinationFloor, totalFloors));
+
+                ElevatorController.MoveToFloor(bestElevator, destinationFloor);
+                PassengerRequestHandler.UnloadPassengers(bestElevator);
             }
-
-            Console.WriteLine($"Elevator {bestElevator.Id} is arriving at Floor {currentFloor}...");
-            ElevatorController.MoveToFloor(bestElevator, currentFloor);
-            PassengerRequestHandler.BoardPassengers(bestElevator, passengerCount);
-
-            // Prompt for destination floor
-            int destinationFloor;
-            do
+            catch (Exception ex)
             {
-                destinationFloor = InputValidator.PromptInt($"Enter destination floor (1 - {totalFloors}):");
-            } while (!InputValidator.IsValidFloor(destinationFloor, totalFloors));
-
-            ElevatorController.MoveToFloor(bestElevator, destinationFloor);
-            PassengerRequestHandler.UnloadPassengers(bestElevator);
+                Console.WriteLine("An unexpected error occurred while handling the request:");
+                Console.WriteLine($"   → {ex.Message}");
+            }
         }
+
     }
 }

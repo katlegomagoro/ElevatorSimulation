@@ -25,28 +25,28 @@ namespace ElevatorSimulation.Tests.Services
         [Fact]
         public void MoveToFloor_ShouldUpdateCurrentFloor_AndResetDirection()
         {
-            // Arrange
             var elevator = new Elevator { Id = 1, CurrentFloor = 1, Direction = ElevatorDirection.Down };
+            var output = new StringWriter();
 
-            // Act
-            ElevatorController.MoveToFloor(elevator, 4);
+            ElevatorController.MoveToFloor(elevator, 4, output); 
 
-            // Assert
             Assert.Equal(4, elevator.CurrentFloor);
             Assert.Equal(ElevatorDirection.Idle, elevator.Direction);
         }
 
+
         [Fact]
         public void MoveToFloor_ShouldNotChangePassengerCount()
         {
-            // Arrange
             var elevator = new Elevator { Id = 1, CurrentFloor = 2, PassengerCount = 3 };
 
-            // Act
+            using var output = new StringWriter();
+            Console.SetOut(output);
+
             ElevatorController.MoveToFloor(elevator, 5);
 
-            // Assert
             Assert.Equal(3, elevator.PassengerCount);
         }
+
     }
 }

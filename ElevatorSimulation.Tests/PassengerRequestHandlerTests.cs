@@ -67,16 +67,14 @@ namespace ElevatorSimulation.Tests.Services
         [Fact]
         public void UnloadPassengers_ResetsPassengerCountAndPrints()
         {
-            // Arrange
             var elevator = new Elevator { Id = 4, PassengerCount = 7 };
 
             using var sw = new StringWriter();
             Console.SetOut(sw);
 
-            // Act
+        
             PassengerRequestHandler.UnloadPassengers(elevator);
 
-            // Assert
             Assert.Equal(0, elevator.PassengerCount);
             var output = sw.ToString();
             Assert.Contains("Unloading 7 passenger(s) from Elevator 4", output);

@@ -18,26 +18,31 @@ namespace ElevatorSimulation.Services
         }
 
         // Actual movement 
-        public static void MoveToFloor(Elevator elevator, int targetFloor)
+        public static void MoveToFloor(Elevator elevator, int targetFloor, TextWriter? writer = null)
         {
+            writer ??= Console.Out;
+
             if (elevator.CurrentFloor == targetFloor)
             {
-                Console.WriteLine($"Elevator {elevator.Id} is already on Floor {targetFloor}.");
+                writer.WriteLine($"Elevator {elevator.Id} is already on Floor {targetFloor}.");
                 return;
             }
 
-            elevator.Direction = GetDirectionToFloor(elevator, targetFloor);
-            Console.WriteLine($"Elevator {elevator.Id} moving {elevator.Direction}...");
+            elevator.Direction = targetFloor > elevator.CurrentFloor
+                ? ElevatorDirection.Up
+                : ElevatorDirection.Down;
+
+            writer.WriteLine($"Elevator {elevator.Id} moving {elevator.Direction}...");
 
             while (elevator.CurrentFloor != targetFloor)
             {
                 elevator.CurrentFloor += elevator.Direction == ElevatorDirection.Up ? 1 : -1;
-                Console.WriteLine($"Elevator {elevator.Id} now at Floor {elevator.CurrentFloor}");
-                Thread.Sleep(300);
+                writer.WriteLine($"Elevator {elevator.Id} now at Floor {elevator.CurrentFloor}");
+                Thread.Sleep(100); 
             }
 
             elevator.Direction = ElevatorDirection.Idle;
-            Console.WriteLine($"Elevator {elevator.Id} has arrived at Floor {targetFloor}");
+            writer.WriteLine($"Elevator {elevator.Id} has arrived at Floor {targetFloor}");
         }
     }
 }
